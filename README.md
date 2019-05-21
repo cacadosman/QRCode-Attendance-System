@@ -4,7 +4,7 @@ Sistem presensi online menggunakan QR Code untuk tugas mata kuliah Manajemen Pro
 ## Tools:
 
 - NPM
-- VueJS
+- Vue-CLI
 - Vuetify CSS
 - PHP >= 7.1.3
 - Composer
