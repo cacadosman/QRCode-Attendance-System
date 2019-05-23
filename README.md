@@ -8,6 +8,6 @@ Sistem presensi online menggunakan QR Code untuk tugas mata kuliah Manajemen Pro
 - Vuetify CSS
 - PHP >= 7.1.3
 - Composer
-- Laravel 5.8
+- Lumen 5.8
 - Nginx/XAMPP
 - MySQL
