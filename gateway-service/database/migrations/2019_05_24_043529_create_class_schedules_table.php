@@ -17,7 +17,8 @@ class CreateClassSchedulesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('class_id');
             $table->integer('credit');
-            $table->time('schedule');
+            $table->integer('day');
+            $table->time('time');
 //            $table->timestamps();
         });
     }

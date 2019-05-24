@@ -17,7 +17,6 @@ class CreateClassAttendancesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('class_schedule_id');
             $table->date('date');
-            $table->integer('lecturer_id');
             
             //$table->timestamps();
         });
