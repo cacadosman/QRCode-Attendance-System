@@ -17,7 +17,7 @@ class CreateStudentsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->string('nim')->unique();
-            $table->timestamps();
+//            $table->timestamps();
         });
     }
 
