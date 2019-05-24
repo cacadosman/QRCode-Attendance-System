@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\LecturerMiddleware;
+
 require_once __DIR__.'/../vendor/autoload.php';
 
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
@@ -61,9 +63,14 @@ $app->singleton(
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'lecturer' => App\Http\Middleware\LecturerMiddleware::class,
+    'student' => App\Http\Middleware\StudentsMiddleware::class,
+]);
+
+$app->middleware([
+    App\Http\Middleware\CorsMiddleware::class
+]);
 
 /*
 |--------------------------------------------------------------------------

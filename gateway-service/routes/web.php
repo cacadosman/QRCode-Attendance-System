@@ -11,6 +11,8 @@
 |
 */
 
-$router->get('/', function () use ($router) {
+$router->get('/', ["middleware" => "lecturer", function () use ($router) {
     return $router->app->version();
-});
+}]);
+
+$router->post('/auth', 'AuthController@authenticate');
