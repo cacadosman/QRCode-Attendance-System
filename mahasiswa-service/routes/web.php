@@ -14,3 +14,7 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->post('/courses',"MahasiswaController@courses");
+$router->post('/notifications',"MahasiswaController@notifications");
+$router->post('/presences',"MahasiswaController@presences");
