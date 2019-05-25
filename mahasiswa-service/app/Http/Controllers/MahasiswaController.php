@@ -18,16 +18,6 @@ class MahasiswaController extends Controller
         //
     }
 
-    public function login(Request $request){
-        $email=$request->email;
-        $password=$request->password;
-        $status = DB::table('users')->select('name','email')->where([
-            ['email','=',$email],
-            ['password','=',Hash::make($password)]
-        ])->first();
-        return dd($status);
-
-    }
     public function notifications(Request $request){
         $user_id=$request->user_id;
         //$status = DB::table('users AS u')
