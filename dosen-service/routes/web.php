@@ -15,4 +15,4 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->post('/login',"DosenController@login");
+$router->get('/course_list',"DosenController@course_list");
