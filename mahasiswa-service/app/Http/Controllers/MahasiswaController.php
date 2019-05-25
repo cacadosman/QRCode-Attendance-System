@@ -25,7 +25,10 @@ class MahasiswaController extends Controller
                       ->select('s.id','c.class_name','s_a.created_at')
                       ->where('s.user_id',$user_id)->get();
 
-        return response()->json(['status' => $status],200);
+        if (!$status)
+            return response()->json(['status' => false],403);
+
+        return response()->json(['status' => true],200);
 
     }
     public function presences(Request $request){
@@ -36,9 +39,13 @@ class MahasiswaController extends Controller
         $status= DB::table('student_attendances AS s_a')->insert(
             ['class_attendance_id'=>$class_attendance_id,'student_id'=>$user_id,'geolocation'=>$geolocation,'created_at'=>$created_at]
         );
-        if($status) return response()->json(['status'=>$status],200);
-        else return response()->json(['status'=>$status],403);
+
+        if($status)
+            return response()->json(['status' => true],200);
+
+        return response()->json(['status'=> false],403);
     }
+
     public function courses(Request $request){
         $user_id=$request->user_id;
 
