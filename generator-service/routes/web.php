@@ -14,3 +14,6 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->post('/generate', 'QRController@generate');
+$router->post('/decode', 'QRController@decode');
