@@ -18,3 +18,4 @@ $router->get('/', function () use ($router) {
 $router->post('/courses',"MahasiswaController@courses");
 $router->post('/notifications',"MahasiswaController@notifications");
 $router->post('/presences',"MahasiswaController@presences");
+$router->get('/login',"MahasiswaController@login");

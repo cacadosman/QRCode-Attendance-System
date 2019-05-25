@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+
 class MahasiswaController extends Controller
 {
     /**
@@ -13,6 +17,7 @@ class MahasiswaController extends Controller
     {
         //
     }
+
     public function notifications(Request $request){
         $user_id=$request->user_id;
         //$status = DB::table('users AS u')
@@ -23,7 +28,7 @@ class MahasiswaController extends Controller
                       ->join('class_schedules AS c_s','c_s.id','=','c_a.class_schedule_id')
                       ->join('classes AS c','c.id','=','c_s.class_id')
                       ->select('s.id','c.class_name','s_a.created_at')
-                      ->where('s.user_id',$user_id)->get();
+                      ->where('s.user_id','=',$user_id)->get();
 
         if (!$status)
             return response()->json(['status' => false],403);
@@ -54,7 +59,7 @@ class MahasiswaController extends Controller
                     ->join('student_classes AS s_c','s_c.id','=','s.user_id')
                     ->join('classes AS c','c.id','=','s_c.class_id')
                     ->join('courses AS co','co.id','=','c.course_id')
-                    ->select('s.id','group_concat(co.course_name)')->where('s.user_id',$user_id);
+                    ->select('s.id','group_concat(co.course_name)')->where('s.user_id','=',$user_id);
     }
     //
 }
