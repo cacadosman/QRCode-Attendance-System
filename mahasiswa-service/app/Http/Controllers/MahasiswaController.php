@@ -40,10 +40,11 @@ class MahasiswaController extends Controller
             ['class_attendance_id'=>$class_attendance_id,'student_id'=>$user_id,'geolocation'=>$geolocation,'created_at'=>$created_at]
         );
 
-        if($status)
-            return response()->json(['status' => true],200);
-
-        return response()->json(['status'=> false],403);
+        if(!$status)
+            return response()->json(['status'=> false],403);
+            
+        return response()->json(['status' => true],200);
+        
     }
 
     public function courses(Request $request){
