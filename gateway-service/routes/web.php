@@ -16,3 +16,10 @@ $router->get('/', ["middleware" => "lecturer", function () use ($router) {
 }]);
 
 $router->post('/auth', 'AuthController@authenticate');
+
+$router->group([
+    'prefix' => 'generator'
+], function () use ($router) {
+    $router->post('/generate', 'GeneratorController@generate');
+
+});
