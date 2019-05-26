@@ -18,17 +18,7 @@ class QRController
 
     public function generate(Request $request)
     {
-        $date = date('Y-m-d');
-        $classAttendace = [
-            'class_schedule_id' => $request->class_schedule_id,
-            'date' => $date
-        ];
-        $classAttendaceId = DB::table('class_attendances')
-                            ->insertGetId($classAttendace);
-
-        $classAttendace['id'] = $classAttendaceId;
-
-        $token = $this->jwtService->generate($classAttendace, $request->time);
+        $token = $this->jwtService->generate($request->class_attendance_id, $request->time);
 
         return response()->json([
             "status" => true,

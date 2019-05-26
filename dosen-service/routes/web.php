@@ -15,4 +15,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/course_list',"DosenController@course_list");
+$router->get('/courses',"DosenController@courses");
+$router->get('/schedules',"DosenController@classSchedules");
+$router->post('/sessions',"DosenController@createSession");
+$router->post('/generate', 'DosenController@generateQr');

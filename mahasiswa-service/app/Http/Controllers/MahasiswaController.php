@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -38,16 +39,52 @@ class MahasiswaController extends Controller
 
     }
     public function presences(Request $request){
-        $user_id=$request->user_id;
-        $class_attendance_id=$request->class_attendance_id;
-        $geolocation=$request->geolocation;
-        $created_at=time();
-        $status= DB::table('student_attendances AS s_a')->insert(
-            ['class_attendance_id'=>$class_attendance_id,'student_id'=>$user_id,'geolocation'=>$geolocation,'created_at'=>$created_at]
-        );
+
+        $client = new Client([
+            "base_uri" => env('APP_URL') . env('GENERATOR_LOCAL')
+        ]);
+
+        $response = $client->request('POST', '/decode', [
+            'json' => [
+                'token' => $request->qrtoken
+            ]
+        ]);
+
+        $qrData = json_decode($response->getBody());
+
+        if (!$qrData->status)
+            return response()->json([
+                "status" => false,
+                "error" => "Tidak dapat memproses QR."
+            ], 200);
+
+        $user_id = 1;
+        $class_attendance_id = $qrData->data->id;
+        $geolocation = $request->geolocation;
+        $created_at = date("Y-m-d H:i:s", time());
+
+        $point = DB::select(DB::raw("select point(:lat, :lng)"), [
+            "lat" => $geolocation['lat'],
+            "lng" => $geolocation['lng']
+        ]);
+
+        $status = DB::insert("insert into student_attendances (class_attendance_id, student_id, geolocation, created_at) values (?, ?, point(?, ?), ?)", [
+            $class_attendance_id,
+            $user_id,
+            $geolocation['lat'],
+            $geolocation['lng'],
+            $created_at
+        ]);
+
+//        $status = DB::table('student_attendances AS s_a')->insert([
+//                'class_attendance_id' => $class_attendance_id,
+//                'student_id' => $user_id,
+//                'geolocation' => $point,
+//                'created_at' => $created_at
+//            ]);
 
         if(!$status)
-            return response()->json(['status'=> false],403);
+            return response()->json(['status'=> false],200);
             
         return response()->json(['status' => true],200);
         
