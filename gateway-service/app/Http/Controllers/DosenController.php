@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class DosenController
 {
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function courses(Request $request)
     {
         $client = new Client([
@@ -24,6 +29,11 @@ class DosenController
         return json_decode($response->getBody(), true);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function classSchedules(Request $request)
     {
         $client = new Client([
@@ -40,6 +50,11 @@ class DosenController
         return json_decode($response->getBody(), true);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function createSession(Request $request)
     {
         $client = new Client([
@@ -56,6 +71,11 @@ class DosenController
         return json_decode($response->getBody(), true);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function generateQr(Request $request)
     {
         $client = new Client([

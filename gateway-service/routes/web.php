@@ -21,8 +21,9 @@ $router->group([
     'prefix' => 'students',
     'middleware' => 'student'
 ], function () use ($router) {
+    $router->post('/courses', 'MahasiswaController@courses');
     $router->post('/presences', 'MahasiswaController@presences');
-
+    $router->post('/notifications', 'MahasiswaController@notifications');
 });
 
 $router->group([
