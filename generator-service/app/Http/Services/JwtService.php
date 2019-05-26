@@ -9,7 +9,7 @@ use Firebase\JWT\JWT;
 
 class JwtService
 {
-    public function generate(array $data, int $time)
+    public function generate($data, int $time)
     {
         $payload = [
             'iss' => "qr-manpro", // Issuer of the token
@@ -26,19 +26,22 @@ class JwtService
         if(!$token) {
             // Unauthorized response if token not there
             return response()->json([
+                'status' => false,
                 'error' => 'Token not provided.'
-            ], 401);
+            ], 200);
         }
         try {
             $data = JWT::decode($token, env('SALT'), ['HS256']);
         } catch(ExpiredException $e) {
             return response()->json([
+                'status' => false,
                 'error' => 'Provided token is expired.'
-            ], 400);
+            ], 200);
         } catch(Exception $e) {
             return response()->json([
+                'status' => false,
                 'error' => 'An error while decoding token.'
-            ], 400);
+            ], 200);
         }
 
         return $data->sub;

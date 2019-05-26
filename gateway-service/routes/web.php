@@ -18,8 +18,20 @@ $router->get('/', ["middleware" => "lecturer", function () use ($router) {
 $router->post('/auth', 'AuthController@authenticate');
 
 $router->group([
-    'prefix' => 'generator'
+    'prefix' => 'students',
+    'middleware' => 'student'
 ], function () use ($router) {
-    $router->post('/generate', 'GeneratorController@generate');
+    $router->post('/courses', 'MahasiswaController@courses');
+    $router->post('/presences', 'MahasiswaController@presences');
+    $router->post('/notifications', 'MahasiswaController@notifications');
+});
 
+$router->group([
+    "prefix" => 'lecturers',
+    'middleware' => 'lecturer'
+], function () use ($router) {
+    $router->get('/courses',"DosenController@courses");
+    $router->get('/schedules',"DosenController@classSchedules");
+    $router->post('/sessions',"DosenController@createSession");
+    $router->post('/generate', 'DosenController@generateQr');
 });
