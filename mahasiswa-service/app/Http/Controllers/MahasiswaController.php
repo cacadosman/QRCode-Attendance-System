@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-
 class MahasiswaController extends Controller
 {
     /**
@@ -19,7 +18,7 @@ class MahasiswaController extends Controller
     {
         //
     }
-
+  
     public function notifications(Request $request){
 
         $data = DB::table('students as S')
@@ -39,6 +38,7 @@ class MahasiswaController extends Controller
         ],200);
 
     }
+  
     public function presences(Request $request){
 
         $client = new Client([
@@ -103,5 +103,4 @@ class MahasiswaController extends Controller
             'data' => $data
         ],200);
     }
-
 }
