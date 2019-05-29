@@ -1,9 +1,9 @@
 <template>
-  <v-app 
+  <v-app
   style="background-color: #fff;"
   >
 
-    <v-toolbar app v-if="!$store.state.isLoginPage">
+    <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
         <span>QR-Code</span>
         <span class="font-weight-light">Attendance</span>
@@ -19,7 +19,7 @@
       :active.sync="bottomNav"
       :value="true"
       fixed
-      v-if="!$store.state.isLoginPage"
+      v-if="$store.state.showTemplate"
     >
 
       <div
@@ -119,7 +119,17 @@ export default {
       this.scanner = false
     },
     onDecode: function (decodedString) {
-      this.closeScanner()
+      this.axios.post(process.env.BASE_URL + '/students/presences', {
+        token: localStorage.getItem('jwt'),
+        qrtoken: decodedString,
+        geolocation: {
+          lat: 10,
+          lng: 5
+        }
+      })
+        .then(response => {
+          this.closeScanner()
+        })
       this.qrLoader.status = true
     }
   },
@@ -133,10 +143,11 @@ export default {
     }
   },
   created () {
-    if (this.$route.name === 'Login') {
-      this.$store.commit('onLoginPage', true)
-    } else {
-      this.$store.commit('onLoginPage', false)
+    const token = localStorage.getItem('jwt')
+    const isValid = token !== null ? (Date.now() / 1000 | 0) <= JSON.parse(atob(localStorage.getItem('jwt').split('.')[1])).exp : true
+    if (!isValid) {
+      localStorage.removeItem('jwt')
+      this.$router.push({'name': 'Login'})
     }
   }
 }

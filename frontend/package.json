@@ -15,7 +15,10 @@
   },
   "dependencies": {
     "@vue/cli-service": "^3.7.0",
+    "axios": "^0.18.0",
     "vue": "^2.5.2",
+    "vue-axios": "^2.1.4",
+    "vue-qrcode-component": "^2.1.1",
     "vue-qrcode-reader": "^2.0.1",
     "vue-router": "^3.0.1",
     "vuetify": "^1.5.14",

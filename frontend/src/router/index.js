@@ -3,8 +3,9 @@ import Router from 'vue-router'
 
 import Dashboard from '@/components/Dashboard'
 import Login from '@/components/Login'
+import Dosen from '@/components/Dosen'
 
-// import auth from '@/middlewares/auth'
+import auth from '@/middlewares/auth'
 
 Vue.use(Router)
 
@@ -13,14 +14,20 @@ export default new Router({
     {
       path: '/',
       name: 'Dashboard',
-      component: Dashboard
-      // beforeEnter: auth.redirectIfNotAuthenticated
+      component: Dashboard,
+      beforeEnter: auth.isStudent
     },
     {
       path: '/login',
       name: 'Login',
-      component: Login
-      // beforeEnter: auth.redirectIfNotAuthenticated
+      component: Login,
+      beforeEnter: auth.redirectIfAuthenticated
+    },
+    {
+      path: '/dosen',
+      name: 'Dosen',
+      component: Dosen,
+      beforeEnter: auth.isLecturer
     }
   ],
   mode: 'history'
