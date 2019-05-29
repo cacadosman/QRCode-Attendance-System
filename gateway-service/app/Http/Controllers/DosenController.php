@@ -55,6 +55,27 @@ class DosenController
      * @return mixed
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
+    public function classAttendances(Request $request)
+    {
+        $client = new Client([
+            "base_uri" => env('APP_URL') . env('DOSEN_LOCAL')
+        ]);
+
+        $response = $client->request('GET', '/attendances', [
+            'query' => [
+                'auth' => urlencode(json_encode($request->auth)),
+                'class_id' => $request->class_id
+            ]
+        ]);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function createSession(Request $request)
     {
         $client = new Client([

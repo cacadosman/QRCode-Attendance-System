@@ -52,18 +52,21 @@ class AuthController extends Controller
             // differents kind of responses. But let's return the
             // below respose for now.
             return response()->json([
+                'status' => false,
                 'error' => 'Email does not exist.'
-            ], 400);
+            ], 200);
         }
         // Verify the password and generate the token
         if (Hash::check($request->password, $user->password)) {
             return response()->json([
+                'status' => true,
                 'token' => $this->jwt($user)
             ], 200);
         }
         // Bad Request response
         return response()->json([
+            'status' => false,
             'error' => 'Email or password is wrong.'
-        ], 400);
+        ], 200);
     }
 }

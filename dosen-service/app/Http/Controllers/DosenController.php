@@ -40,6 +40,25 @@ class DosenController extends Controller
         $request->auth = json_decode(urldecode($request->auth));
 
         $data = DB::table('lecturers as L')
+            ->join('lecturer_classes as LC', 'L.id', 'LC.lecturer_id')
+            ->join('classes as C', 'LC.class_id', 'C.id')
+            ->join('class_schedules as CS', 'C.id', 'CS.class_id')
+            ->where('L.user_id', '=',$request->auth->id)
+            ->where('C.id', '=', $request->class_id)
+            ->select('CS.id', 'CS.day', 'CS.time')
+            ->get();
+
+        return response()->json([
+            "status" => true,
+            "data" => $data
+        ], 200);
+    }
+
+    public function classAttendances(Request $request)
+    {
+        $request->auth = json_decode(urldecode($request->auth));
+
+        $data = DB::table('lecturers as L')
                 ->join('lecturer_classes as LC', 'L.id', 'LC.lecturer_id')
                 ->join('classes as C', 'LC.class_id', 'C.id')
                 ->join('class_schedules as CS', 'C.id', 'CS.class_id')
@@ -93,7 +112,7 @@ class DosenController extends Controller
             ], 200);
 
         $result = DB::table('class_attendances')
-                            ->insert($classAttendace);
+                            ->insertGetId($classAttendace);
 
         if (!$result)
             return response()->json([
@@ -106,7 +125,9 @@ class DosenController extends Controller
         return response()->json([
             "status" => true,
             "data" => [
-                "message" => "Pembuatan sesi kelas berhasil."
+                "message" => "Pembuatan sesi kelas berhasil.",
+                "id" => $result,
+                "date" => $date
             ]
         ]);
     }

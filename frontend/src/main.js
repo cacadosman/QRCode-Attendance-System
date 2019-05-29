@@ -8,6 +8,9 @@ import Vuex from 'vuex'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import 'vuetify/dist/vuetify.min.js'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import VueQRCodeComponent from 'vue-qrcode-component'
 
 import auth from '@/middlewares/auth'
 
@@ -15,6 +18,8 @@ Vue.config.productionTip = false
 Vue.use(VueQrcodeReader)
 Vue.use(Vuetify)
 Vue.use(Vuex)
+Vue.use(VueAxios, axios)
+Vue.component('qr-code', VueQRCodeComponent)
 
 /* eslint-disable no-new */
 new Vue({
@@ -26,11 +31,11 @@ new Vue({
     state: {
       hasLoggedIn: auth.isAuthenticated(),
       date: new Date(),
-      isLoginPage: false
+      showTemplate: false
     },
     mutations: {
-      onLoginPage: (state, value) => {
-        state.isLoginPage = value
+      showTemplate: (state, value) => {
+        state.showTemplate = value
       }
     },
     getters: {

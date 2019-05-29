@@ -16,6 +16,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('/courses',"DosenController@courses");
+$router->get('/attendances',"DosenController@classAttendances");
 $router->get('/schedules',"DosenController@classSchedules");
 $router->post('/sessions',"DosenController@createSession");
 $router->post('/generate', 'DosenController@generateQr');

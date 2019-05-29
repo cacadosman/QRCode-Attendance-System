@@ -101,6 +101,9 @@ export default {
         { divider: true, inset: true }
       ]
     }
+  },
+  created () {
+    this.$store.commit('showTemplate', true)
   }
 }
 </script>
